@@ -20,27 +20,17 @@ import {
   BarChart3,
 } from "lucide-react";
 import VideosSection from "./components/VideosSection";
+import Navbar from "@/components/layouts/Navbar";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
       {/* Header Section */}
-      <header className="container mx-auto px-4 py-8">
+      <header className="container mx-auto px-4 py-8 mt-20">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="flex-1 text-center lg:text-left">
-            {/* Logo */}
-            <div className="flex items-center justify-center lg:justify-start mb-6">
-              <div className="text-4xl font-bold">
-                <span className="text-blue-800">T</span>
-                <span className="text-emerald-500">P</span>
-              </div>
-              <span className="ml-2 text-xl font-semibold text-gray-700">
-                TopRep
-              </span>
-            </div>
-
             {/* Headlines */}
-            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
               Unlock the Secrets to{" "}
               <span className="text-blue-700">Pharmaceutical Sales</span>{" "}
               <span className="text-emerald-600">Success</span>
@@ -62,7 +52,7 @@ export default function Home() {
 
           {/* Hero Visual */}
           <div className="flex-1 relative">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md mx-auto">
+            <div className="bg-white rounded-2xl h-[300px] shadow-2xl p-8 max-w-md mx-auto">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                   <Play className="w-6 h-6 text-blue-600" />
@@ -108,6 +98,7 @@ export default function Home() {
           </div>
         </div>
       </header>
+
       <VideosSection />
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
@@ -243,7 +234,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
-              className="bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-emerald-500 hover:bg-emerald-400 text-white px-4 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Subscribe Now for $49/Month
             </Button>
@@ -251,7 +242,7 @@ export default function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="bg-blue-600 hover:bg-blue-800 text-white border-blue-400 hover:border-blue-600 px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-blue-600 hover:bg-blue-800 text-white border-blue-400 hover:border-blue-600 px-4 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Book 1-on-1 Consultation - $99/Hour
             </Button>
@@ -291,17 +282,22 @@ export default function Home() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="John" />
+                      <Input
+                        className="my-2"
+                        id="firstName"
+                        placeholder="John"
+                      />
                     </div>
                     <div>
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Doe" />
+                      <Input className="my-2" id="lastName" placeholder="Doe" />
                     </div>
                   </div>
 
                   <div>
                     <Label htmlFor="email">Email</Label>
                     <Input
+                      className="my-2"
                       id="email"
                       type="email"
                       placeholder="john@example.com"
@@ -310,17 +306,21 @@ export default function Home() {
 
                   <div>
                     <Label htmlFor="card">Card Number</Label>
-                    <Input id="card" placeholder="1234 5678 9012 3456" />
+                    <Input
+                      className="my-2"
+                      id="card"
+                      placeholder="1234 5678 9012 3456"
+                    />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="expiry">Expiry</Label>
-                      <Input id="expiry" placeholder="MM/YY" />
+                      <Input className="my-2" id="expiry" placeholder="MM/YY" />
                     </div>
                     <div>
                       <Label htmlFor="cvc">CVC</Label>
-                      <Input id="cvc" placeholder="123" />
+                      <Input className="my-2" id="cvc" placeholder="123" />
                     </div>
                   </div>
 

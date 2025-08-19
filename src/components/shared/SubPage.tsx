@@ -1,24 +1,8 @@
-"use client";
-import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 
-const VideosSection = () => {
-  // Tab categories
-  const tabs = [
-    "Professional Dressing and Attire",
-    "Communication Skills",
-    "Key Performance Indicators",
-    "Selling Skills",
-    "Relation Building",
-    "Education",
-    "AI",
-  ];
-
-  const [activeTab, setActiveTab] = useState(0);
-  const [tab, setTab] = useState("Professional Dressing and Attire");
-
+const SubPage = ({ sub_pages }: { sub_pages: string }) => {
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section className="container mx-auto px-4 py-16 mt-20">
       <div className="text-center mb-12">
         <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
           Exclusive Video Content
@@ -32,28 +16,19 @@ const VideosSection = () => {
       {/* Tabs Navigation - Similar to the screenshot */}
       <div className="flex overflow-x-auto pb-2 mb-8 hide-scrollbar">
         <div className="flex space-x-2 justify-center mx-auto">
-          {tabs.map((tab, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setActiveTab(index);
-                setTab(tab);
-              }}
-              className={`px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
-                activeTab === index
-                  ? "bg-emerald-500 text-white"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+          <button
+            className={`px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors`}
+          >
+            {decodeURIComponent(sub_pages)}
+          </button>
         </div>
       </div>
 
       {/* Video Content Area */}
       <div className=" p-6 rounded-lg">
-        <h3 className="text-xl font-semibold mb-4">{tabs[activeTab]} Videos</h3>
+        <h3 className="text-xl font-semibold mb-4">
+          {decodeURIComponent(sub_pages)} Videos
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Placeholder for videos - replace with actual content */}
           {[1, 2].map((item) => (
@@ -75,17 +50,8 @@ const VideosSection = () => {
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-center ">
-        <Link
-          href={`/sub-pages/${tab}`}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-        >
-          View More
-        </Link>
-      </div>
     </section>
-    //
   );
 };
 
-export default VideosSection;
+export default SubPage;
