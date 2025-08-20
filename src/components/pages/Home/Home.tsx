@@ -20,7 +20,6 @@ import {
   BarChart3,
 } from "lucide-react";
 import VideosSection from "./components/VideosSection";
-import Navbar from "@/components/layouts/Navbar";
 
 export default function Home() {
   return (

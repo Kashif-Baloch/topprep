@@ -1,14 +1,6 @@
 "use client";
 import { useState } from "react";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  CheckCircle,
-  Users,
-  Award,
-} from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -22,7 +14,11 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -30,7 +26,8 @@ export default function ContactSection() {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     // Basic validation
     if (!formData.name || !formData.email || !formData.message) {
       alert("Please fill in all required fields (Name, Email, and Message)");
@@ -119,7 +116,7 @@ export default function ContactSection() {
                   Send us a Message
                 </h3>
                 <p className="text-sm text-gray-600">
-                  We'll get back to you soon
+                  We&apos;ll get back to you soon
                 </p>
               </div>
             </div>

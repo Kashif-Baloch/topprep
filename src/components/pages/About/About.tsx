@@ -5,8 +5,6 @@ import {
   TrendingUp,
   CheckCircle,
   Star,
-  Briefcase,
-  Globe,
 } from "lucide-react";
 
 export default function AboutSection() {
@@ -67,7 +65,7 @@ export default function AboutSection() {
           At TopRep, we believe that exceptional pharmaceutical sales
           professionals are made, not born. Our mission is to empower medical
           representatives with the knowledge, skills, and confidence they need
-          to excel in today's competitive healthcare landscape.
+          to excel in today&apos;s competitive healthcare landscape.
         </p>
       </div>
 
@@ -95,8 +93,8 @@ export default function AboutSection() {
             <p>
               Founded by industry veterans who understood the challenges facing
               modern medical representatives, TopRep was born from a simple
-              observation: traditional sales training wasn't meeting the unique
-              demands of pharmaceutical sales.
+              observation: traditional sales training wasn&apos;t meeting the
+              unique demands of pharmaceutical sales.
             </p>
 
             <p>
@@ -153,7 +151,7 @@ export default function AboutSection() {
             <p>
               Our comprehensive approach combines theoretical knowledge with
               practical application, ensuring that every learner can immediately
-              implement what they've learned in real-world situations.
+              implement what they&apos;ve learned in real-world situations.
             </p>
           </div>
         </div>
@@ -197,7 +195,7 @@ export default function AboutSection() {
         </h2>
         <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
           Join thousands of successful medical representatives who have elevated
-          their careers with TopRep's expert-led training programs.
+          their careers with TopRep&apos;s expert-led training programs.
         </p>
         <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2">
           <Star className="w-5 h-5" />
