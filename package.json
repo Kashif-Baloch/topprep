@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
     "lint": "next lint",
+    "pnpm:install": "pnpm install",
     "migrate": "npx prisma migrate dev --name init",
     "postinstall": "prisma generate"
   },
@@ -35,6 +35,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
+    "pnpm": "^10.15.0",
     "prisma": "^6.14.0",
     "tailwindcss": "^4",
     "tsx": "^4.20.4",
