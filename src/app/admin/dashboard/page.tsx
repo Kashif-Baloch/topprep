@@ -1,5 +1,6 @@
 // app/dashboard/page.tsx
 import Home from "@/components/pages/Admin/Dashboard/components/Home";
+import SideBar from "@/components/shared/Sidebar";
 import { getAdminSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -10,5 +11,11 @@ export default async function DashboardPage() {
     redirect("/admin/login");
   }
 
-  return <Home username={session?.username} />;
+  return (
+    <>
+      <SideBar>
+        <Home username={session?.username} />
+      </SideBar>
+    </>
+  );
 }
