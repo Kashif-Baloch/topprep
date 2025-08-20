@@ -13,5 +13,5 @@ export const env = envSchema.parse({
   NODE_ENV: process.env.NODE_ENV,
   ADMIN_USERNAME: process.env.ADMIN_USERNAME,
   AUTH_SECRET: process.env.AUTH_SECRET,
-  AUTH_COOKIE_NAME: process.env.AUTH_COOKIE_NAME ?? "__Host-admin_session",
+  AUTH_COOKIE_NAME: process.env.AUTH_COOKIE_NAME ?? "admin_session",
 });
