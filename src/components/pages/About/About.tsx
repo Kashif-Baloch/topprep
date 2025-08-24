@@ -45,19 +45,10 @@ export default function AboutSection() {
   return (
     <div className="container mx-auto px-4 py-8 mt-20">
       {/* Header Section */}
-      <div className="text-center mb-16">
-        <div className="flex items-center justify-center mb-6">
-          <div className="text-4xl font-bold">
-            <span className="text-blue-800">T</span>
-            <span className="text-emerald-500">P</span>
-          </div>
-          <span className="ml-2 text-xl font-semibold text-gray-700">
-            TopRep
-          </span>
-        </div>
-
-        <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+      <div className="text-center mb-16 mt-20">
+        <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight mx-auto">
           Transforming <span className="text-blue-700">Pharmaceutical</span>{" "}
+          <br />
           <span className="text-emerald-600">Sales Excellence</span>
         </h1>
 
@@ -85,54 +76,56 @@ export default function AboutSection() {
       <div className="flex flex-col lg:flex-row items-start justify-between gap-16 mb-20 mt-16 md:mt-28 lg:mt-44">
         {/* Left Content */}
         <div className="flex-1">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            Our <span className="text-emerald-600">Story</span>
-          </h2>
+          <div className="">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              Our <span className="text-emerald-600">Story</span>
+            </h2>
 
-          <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-            <p>
-              Founded by industry veterans who understood the challenges facing
-              modern medical representatives, TopRep was born from a simple
-              observation: traditional sales training wasn&apos;t meeting the
-              unique demands of pharmaceutical sales.
-            </p>
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+              <p>
+                Founded by industry veterans who understood the challenges
+                facing modern medical representatives, TopRep was born from a
+                simple observation: traditional sales training wasn&apos;t
+                meeting the unique demands of pharmaceutical sales.
+              </p>
 
-            <p>
-              We recognized that successful medical representatives need more
-              than generic sales techniques. They need specialized knowledge
-              about healthcare systems, regulatory environments, and the complex
-              decision-making processes of healthcare professionals.
-            </p>
+              <p>
+                We recognized that successful medical representatives need more
+                than generic sales techniques. They need specialized knowledge
+                about healthcare systems, regulatory environments, and the
+                complex decision-making processes of healthcare professionals.
+              </p>
 
-            <p>
-              Today, TopRep stands as the premier destination for pharmaceutical
-              sales training, combining cutting-edge video content with
-              practical, real-world strategies that deliver measurable results.
-            </p>
-          </div>
-
-          <div className="mt-8 space-y-4">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0" />
-              <span className="text-gray-700">
-                Evidence-based training methodologies
-              </span>
+              <p>
+                Today, TopRep stands as the premier destination for
+                pharmaceutical sales training, combining cutting-edge video
+                content with practical, real-world strategies that deliver
+                measurable results.
+              </p>
             </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0" />
-              <span className="text-gray-700">
-                Continuous curriculum updates and improvements
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0" />
-              <span className="text-gray-700">
-                Personalized learning paths for different experience levels
-              </span>
+
+            <div className="mt-8 space-y-4">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+                <span className="text-gray-700">
+                  Evidence-based training methodologies
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+                <span className="text-gray-700">
+                  Continuous curriculum updates and improvements
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+                <span className="text-gray-700">
+                  Personalized learning paths for different experience levels
+                </span>
+              </div>
             </div>
           </div>
         </div>
-
         {/* Right Content */}
         <div className="flex-1">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">

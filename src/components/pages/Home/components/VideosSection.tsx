@@ -39,7 +39,7 @@ const VideosSection = () => {
                 setActiveTab(index);
                 setTab(tab);
               }}
-              className={`px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 cursor-pointer text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
                 activeTab === index
                   ? "bg-emerald-500 text-white"
                   : "bg-gray-100 text-gray-800 hover:bg-gray-200"
@@ -55,14 +55,11 @@ const VideosSection = () => {
       <div className=" p-6 rounded-lg">
         <h3 className="text-xl font-semibold mb-4">{tabs[activeTab]} Videos</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Placeholder for videos - replace with actual content */}
           {[1, 2].map((item) => (
             <div key={item} className="bg-white p-4 rounded-lg shadow-sm">
               <div className="aspect-w-16 aspect-h-9  rounded mb-3"></div>
-              <h4 className="font-medium">Video Title {item}</h4>
+              <h4 className="font-medium mb-6 text-2xl">Video Title {item}</h4>
               <iframe
-                // width="560"
-                // height="315"
                 className="aspect-video rounded-md"
                 src="https://www.youtube.com/embed/ijMTbUzDS-U?si=EyRMVCmGZ5EbDE5P"
                 title="YouTube video player"
@@ -77,7 +74,7 @@ const VideosSection = () => {
       </div>
       <div className="flex items-center justify-center ">
         <Link
-          href={`/sub-pages/${tab}`}
+          href={`/videos/${tab.trim().replace(/\s+/g, "-")}`}
           className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
           View More

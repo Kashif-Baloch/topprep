@@ -23,7 +23,7 @@ import VideosSection from "./components/VideosSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="pt-28 bg-gradient-to-br from-blue-50 to-green-50">
       {/* Header Section */}
       <header className="container mx-auto px-4 py-8 mt-20">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -50,7 +50,7 @@ export default function Home() {
           </div>
 
           {/* Hero Visual */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative ">
             <div className="bg-white rounded-2xl h-[300px] shadow-2xl p-8 max-w-md mx-auto">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -233,7 +233,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
-              className="bg-emerald-500 hover:bg-emerald-400 text-white px-4 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-emerald-500 hover:bg-emerald-400 text-white px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Subscribe Now for $49/Month
             </Button>
@@ -241,7 +241,7 @@ export default function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="bg-blue-600 hover:bg-blue-800 text-white border-blue-400 hover:border-blue-600 px-4 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-blue-500 border-0 hover:bg-blue-400 text-white  px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
             >
               Book 1-on-1 Consultation - $99/Hour
             </Button>
@@ -323,7 +323,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 text-lg font-semibold">
+                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12  font-semibold">
                     Start Subscription - $49/Month
                   </Button>
                 </CardContent>
@@ -357,16 +357,29 @@ export default function Home() {
                       <CheckCircle className="w-5 h-5 text-emerald-500" />
                       <span>Q&A with industry experts</span>
                     </div>
+
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                      <span>Exclusive access to market trend reports</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                      <span>One-on-one mentoring sessions</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                      <span>Actionable feedback on live sales calls</span>
+                    </div>
                   </div>
 
-                  <Button className="w-full bg-blue-600 hover:bg-blue-800 text-white py-3 text-lg font-semibold mt-8">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-800 text-white h-12 font-semibold mt-8">
                     Book Consultation - $99/Hour
                   </Button>
                 </CardContent>
               </Card>
             </div>
 
-            <div className="text-center mt-12">
+            {/* <div className="text-center mt-12 ">
               <p className="text-gray-600 mb-4">
                 <strong>
                   Trusted by pharmaceutical professionals worldwide
@@ -377,7 +390,7 @@ export default function Home() {
                 <span>💳 Secure Payment</span>
                 <span>🛡️ Privacy Protected</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </footer>
