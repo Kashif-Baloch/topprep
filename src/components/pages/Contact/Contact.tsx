@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -30,7 +31,9 @@ export default function ContactSection() {
     e.preventDefault();
     // Basic validation
     if (!formData.name || !formData.email || !formData.message) {
-      alert("Please fill in all required fields (Name, Email, and Message)");
+      toast.error(
+        "Please fill in all required fields (Name, Email, and Message)"
+      );
       return;
     }
 

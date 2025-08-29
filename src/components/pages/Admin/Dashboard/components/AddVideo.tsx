@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Send, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ export default function ContactSection() {
       !formData.url ||
       !formData.category
     ) {
-      alert(
+      toast.error(
         "Please fill in all required fields 📍 (Title, Description, URL, and Category)"
       );
       return;
