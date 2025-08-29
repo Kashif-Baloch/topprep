@@ -56,7 +56,7 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-r from-blue-800 to-emerald-700  py-12 ">
       <div className="mx-auto container px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-white">TopRep</h3>
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
 
           {/* Navigation Links */}
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Quick Links</h4>
             <div className="flex flex-col space-y-2">
               {links.map((link, index) => (
@@ -80,7 +80,7 @@ export default function Footer() {
                 </Link>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Social Media Section */}
           <div className="space-y-4">
