@@ -20,12 +20,13 @@ import {
   BarChart3,
 } from "lucide-react";
 import VideosSection from "./components/VideosSection";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="pt-28 bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="pt-20 bg-gradient-to-br from-blue-50 to-green-50">
       {/* Header Section */}
-      <header className="container mx-auto px-4 py-8 mt-20">
+      <header className="container mx-auto px-4 py-8 my-32">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="flex-1 text-center lg:text-left">
             {/* Headlines */}
@@ -41,12 +42,14 @@ export default function Home() {
               pharmaceutical sales.
             </p>
 
-            <Button
-              size="lg"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-7 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Start Your Journey Today
-            </Button>
+            <Link href={"/contact"}>
+              <Button
+                size="lg"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-7 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Start Your Journey Today
+              </Button>
+            </Link>
           </div>
 
           {/* Hero Visual */}
@@ -132,8 +135,8 @@ export default function Home() {
 
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardHeader>
-              <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                <Stethoscope className="w-6 h-6 text-emerald-600" />
+              <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 ">
+                <Stethoscope className="w-6 h-6 text-emerald-600 " />
               </div>
               <CardTitle className="text-emerald-700">
                 Pharmacy-Specific Techniques
@@ -231,20 +234,23 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              size="lg"
-              className="bg-emerald-500 hover:bg-emerald-400 text-white px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Subscribe Now for $49/Month
-            </Button>
-
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-blue-500 border-0 hover:bg-blue-400 text-white  px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
-            >
-              Book 1-on-1 Consultation - $99/Hour
-            </Button>
+            <Link href={"/#"}>
+              <Button
+                size="lg"
+                className="bg-emerald-500 cursor-pointer hover:bg-emerald-400 text-white px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Subscribe Now for $49/Month
+              </Button>
+            </Link>
+            <Link href={"/calendly"}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-blue-500 border-0 cursor-pointer hover:bg-blue-400 text-white  px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
+              >
+                Book 1-on-1 Consultation - $99/Hour
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -253,22 +259,55 @@ export default function Home() {
       <footer className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Secure Subscription
-              </h3>
-              <Badge
-                variant="secondary"
-                className="bg-emerald-100 text-emerald-800 px-4 py-2"
-              >
-                <CheckCircle className="w-4 h-4 mr-2" />
-                Secure Checkout
-              </Badge>
-            </div>
-
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Subscription Form */}
               <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-center text-blue-800">
+                    Monthly Subscription - $49
+                  </CardTitle>
+                  <CardDescription className="text-center">
+                    Full access to all video content and resources
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4 text-gray-700 mb-10">
+                    <div className="grid grid-flow-col items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-500" />
+                      <span>
+                        Unlimited access to health and wellness resources
+                      </span>
+                    </div>
+                    <div className="grid grid-flow-col items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-500" />
+                      <span>
+                        Weekly virtual sessions with certified healthcare
+                        coaches
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-500" />
+                      <span>Personalized nutrition and fitness plans</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-500" />
+                      <span>24/7 access to a healthcare support chat</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-500" />
+                      <span>Discounts on partner clinics and labs</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-500" />
+                      <span>Monthly progress tracking reports</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12  font-semibold">
+                    Subscribe Now
+                  </Button>
+                </CardContent>
+              </Card>
+              {/* <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-center text-blue-800">
                     Monthly Subscription - $49
@@ -327,7 +366,7 @@ export default function Home() {
                     Start Subscription - $49/Month
                   </Button>
                 </CardContent>
-              </Card>
+              </Card> */}
 
               {/* Consultation Booking */}
               <Card className="shadow-lg">
@@ -371,26 +410,14 @@ export default function Home() {
                       <span>Actionable feedback on live sales calls</span>
                     </div>
                   </div>
-
-                  <Button className="w-full bg-blue-600 hover:bg-blue-800 text-white h-12 font-semibold mt-8">
-                    Book Consultation - $99/Hour
-                  </Button>
+                  <Link href={"/calendly"}>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-800 text-white h-12 font-semibold mt-8">
+                      Book a Consultant
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
-
-            {/* <div className="text-center mt-12 ">
-              <p className="text-gray-600 mb-4">
-                <strong>
-                  Trusted by pharmaceutical professionals worldwide
-                </strong>
-              </p>
-              <div className="flex justify-center items-center gap-4 text-sm text-gray-500">
-                <span>🔒 SSL Secured</span>
-                <span>💳 Secure Payment</span>
-                <span>🛡️ Privacy Protected</span>
-              </div>
-            </div> */}
           </div>
         </div>
       </footer>

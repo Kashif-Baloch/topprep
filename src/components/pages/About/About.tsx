@@ -1,3 +1,4 @@
+"use client";
 import {
   Target,
   Users,
@@ -6,13 +7,18 @@ import {
   CheckCircle,
   Star,
 } from "lucide-react";
+import Image from "next/image";
+
+import { useInView } from "react-intersection-observer";
+import CountUp from "react-countup";
+import Link from "next/link";
 
 export default function AboutSection() {
   const stats = [
-    { number: "5000+", label: "Medical Representatives Trained" },
-    { number: "98%", label: "Success Rate" },
-    { number: "50+", label: "Pharmaceutical Companies" },
-    { number: "24/7", label: "Expert Support" },
+    { number: 5000, label: "Medical Representatives Trained", suffix: "+" },
+    { number: 98, label: "Success Rate", suffix: "%" },
+    { number: 50, label: "Pharmaceutical Companies", suffix: "+" },
+    { number: 24, label: "Expert Support", suffix: "/7" },
   ];
 
   const values = [
@@ -65,7 +71,13 @@ export default function AboutSection() {
         {stats.map((stat, index) => (
           <div key={index} className="text-center">
             <div className="text-3xl lg:text-4xl font-bold text-blue-800 mb-2">
-              {stat.number}
+              <CountUp
+                end={stat.number}
+                duration={3}
+                suffix={stat.suffix}
+                enableScrollSpy
+              />
+              {/* {stat.number} */}
             </div>
             <div className="text-gray-600 font-medium">{stat.label}</div>
           </div>
@@ -73,7 +85,7 @@ export default function AboutSection() {
       </div>
 
       {/* Main Content Section */}
-      <div className="flex flex-col lg:flex-row items-start justify-between gap-16 mb-20 mt-16 md:mt-28 lg:mt-44">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-16 mb-20 mt-16 md:mt-28 lg:mt-44">
         {/* Left Content */}
         <div className="flex-1">
           <div className="">
@@ -127,6 +139,26 @@ export default function AboutSection() {
           </div>
         </div>
         {/* Right Content */}
+        <div className="flex-1">
+          <Image
+            src="/story.jpg"
+            alt="about"
+            width={500}
+            height={500}
+            className="size-full "
+          />
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-16 mb-20 mt-16 md:mt-28 lg:mt-44">
+        <div className="flex-1">
+          <Image
+            src="/mission.jpg"
+            alt="about"
+            width={500}
+            height={500}
+            className="size-full "
+          />
+        </div>
         <div className="flex-1">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
             Our <span className="text-blue-700">Mission</span>
@@ -190,10 +222,13 @@ export default function AboutSection() {
           Join thousands of successful medical representatives who have elevated
           their careers with TopRep&apos;s expert-led training programs.
         </p>
-        <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2">
-          <Star className="w-5 h-5" />
+        <Link
+          href="/contact"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
+        >
+          {/* <Star className="w-5 h-5" /> */}
           Start Your Journey Today
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -2,11 +2,30 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { ChevronDown, Menu, X } from "lucide-react";
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const links = [
+    "Professional Dressing and Attire",
+    "Communication Skills",
+    "Key Performance Indicators",
+    "Selling Skills",
+    "Relation Building",
+    "Education",
+    "AI",
+  ];
   return (
     <header className="fixed bg-white backdrop-blur-md top-0 left-0 w-full z-50">
-      <div className="container mx-auto px-4 flex items-center justify-between py-5">
+      <div className="container mx-auto md:px-4 px-2 flex items-center justify-between py-5">
         <Link href={"/"}>
           <div className="flex items-center justify-center lg:justify-start">
             <div className="text-4xl font-bold">
@@ -18,24 +37,7 @@ const Navbar = () => {
             </span>
           </div>
         </Link>
-
-        <div className="flex items-center lg:gap-3">
-          <span
-            onClick={() => {
-              setShowNav(!showNav);
-            }}
-            className="bg-white lg:hidden px-3 py-[10px] rounded-xl"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="#000"
-              stroke="#000"
-              className="w-6 h-6"
-            >
-              <path d="M3 4H21V6H3V4ZM9 11H21V13H9V11ZM3 18H21V20H3V18Z"></path>
-            </svg>
-          </span>
+        <div className="hidden lg:block">
           <nav>
             <ul className="hidden lg:flex items-center justify-center  space-x-6 text-white ">
               <Link
@@ -50,14 +52,50 @@ const Navbar = () => {
               >
                 About Us
               </Link>
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger className="group text-black cursor-pointer flex items-center gap-2">
+                  Services
+                  <ChevronDown className="h-4 w-4 transform transition-transform duration-300 group-data-[state=open]:-rotate-180" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {links.map((link, index) => (
+                    <DropdownMenuItem
+                      key={index}
+                      className="hover:bg-gray-200 py-2"
+                    >
+                      <Link
+                        href={`/videos/${link.trim().replace(/\s+/g, "-")}`}
+                      >
+                        {link}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Link
+                className="hover:text-primary text-black transition-all"
+                href="/contact"
+              >
+                Contact Us
+              </Link>
             </ul>
           </nav>
+        </div>
+        <button
+          onClick={() => {
+            setShowNav(!showNav);
+          }}
+          className="bg-white lg:hidden px-3 py-[10px] rounded-xl cursor-pointer"
+        >
+          <Menu />
+        </button>
+        <div className=" items-center lg:gap-3 lg:flex hidden">
           <Link
-            className="bg-emerald-500 hover:bg-emerald-600 uppercase ml-4 text-white hidden lg:block px-8 py-[10px] rounded-lg shadow-lg hover:shadow-xl transition-all
+            className="bg-emerald-500 hover:bg-emerald-600 capitalize ml-4 text-white hidden lg:block px-8 py-[10px] rounded-lg shadow-lg hover:shadow-xl transition-all
           duration-300"
-            href="/contact"
+            href="/calendly"
           >
-            Contact Us
+            Book a Consultant
           </Link>
         </div>
       </div>
@@ -65,41 +103,74 @@ const Navbar = () => {
       <div>
         <nav>
           <ul
-            className={`fixed ${
+            className={`fixed lg:hidden ${
               showNav ? "translate-x-0" : "translate-x-[100%]"
-            } z-[100] top-0 left-0 w-full transition-all h-screen bg-gradient-to-br from-blue-50 to-green-50 flex flex-col items-center justify-center gap-7 text-black outfit`}
+            } z-[100] top-0 left-0 w-full transition-all duration-300 h-screen bg-gradient-to-br from-blue-50 to-green-50 flex flex-col items-center justify-center gap-7 text-black outfit`}
           >
-            <Link className="hover:text-[#ffffffcc] transition-all" href="/">
+            <Link className=" transition-all hover:text-emerald-500" href="/">
               Home
             </Link>
             <Link
-              className="hover:text-[#ffffffcc] transition-all"
+              className=" transition-all hover:text-emerald-500"
               href="/about"
             >
               About Us
             </Link>
+            <div className="relative">
+              {/* Trigger */}
+              <button
+                onClick={() => setOpen(!open)}
+                className="flex mx-auto items-center gap-2 text-black cursor-pointer"
+              >
+                Services
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform duration-300 ${
+                    open ? "-rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Menu Content */}
+              {/* {open && ( */}
+              <div
+                className={` mt-2 w-full duration-300 text-center overflow-hidden  z-50 ${
+                  open ? "h-72" : "h-0"
+                }`}
+              >
+                {links.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={`/videos/${link.trim().replace(/\s+/g, "-")}`}
+                    className="block px-4 py-2 hover:text-emerald-500 text-black transition-colors duration-200"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link}
+                  </Link>
+                ))}
+              </div>
+
+              {/* )} */}
+            </div>
             <Link
-              className="bg-emerald-500 hover:bg-emerald-600 border border-white uppercase text-white px-8 py-[10px] rounded-md"
+              className=" transition-all hover:text-emerald-500"
               href="/contact"
             >
               Contact Us
+            </Link>
+            <Link
+              className="bg-emerald-500 hover:bg-emerald-600 border border-white uppercase text-white px-8 py-[10px] rounded-md"
+              href="/calendly"
+            >
+              Book a Consultant
             </Link>
 
             <span
               onClick={() => {
                 setShowNav(!showNav);
               }}
-              className="bg- z-[60] lg:hidden px-3 py-[10px] rounded-xl outfit absolute top-5 right-6"
+              className="bg- z-[60] cursor-pointer lg:hidden px-3 py-[10px] rounded-xl outfit absolute top-5 right-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="#000"
-                stroke="#000"
-                className="w-6 h-6"
-              >
-                <path d="M10.5859 12L2.79297 4.20706L4.20718 2.79285L12.0001 10.5857L19.793 2.79285L21.2072 4.20706L13.4143 12L21.2072 19.7928L19.793 21.2071L12.0001 13.4142L4.20718 21.2071L2.79297 19.7928L10.5859 12Z"></path>
-              </svg>
+              <X />
             </span>
           </ul>
         </nav>

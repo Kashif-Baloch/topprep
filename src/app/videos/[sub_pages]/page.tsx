@@ -1,7 +1,6 @@
 import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/Navbar";
-import SubPage from "@/components/shared/SubPage";
-import React from "react";
+import ClientWrapper from "./ClientWrapper";
 
 const Page = async ({ params }: { params: Promise<{ sub_pages: string }> }) => {
   const { sub_pages } = await params;
@@ -9,7 +8,7 @@ const Page = async ({ params }: { params: Promise<{ sub_pages: string }> }) => {
   return (
     <>
       <Navbar />
-      <SubPage sub_pages={sub_pages} />
+      <ClientWrapper sub_pages={sub_pages} />
       <Footer />
     </>
   );
