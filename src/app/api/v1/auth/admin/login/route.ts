@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
     }
 
     const ok = await verifyAdminCredentials(username, password);
-
     if (!ok) {
       return NextResponse.json(
         { error: "Invalid credentials" },

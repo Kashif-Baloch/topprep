@@ -8,11 +8,13 @@ export default function LoginSection() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setLoading(true);
     try {
       const res = await api.post("/v1/auth/admin/login", {
         username,
@@ -23,6 +25,8 @@ export default function LoginSection() {
     } catch (error) {
       console.log(error);
       setError("Login failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -60,9 +64,10 @@ export default function LoginSection() {
         </div>
         <button
           type="submit"
+          disabled={loading}
           className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-2 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl w-full transition-all duration-300"
         >
-          Log In
+          {loading ? "Logging in..." : "Log In"}
         </button>
       </form>
     </div>

@@ -1,9 +1,26 @@
 "use client";
 import { useState } from "react";
-import { Send, CheckCircle } from "lucide-react";
-import { toast } from "sonner";
+import { Send, CheckCircle, XCircle } from "lucide-react";
+import api from "@/config/axios";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export default function ContactSection() {
+export default function AddVideo() {
+  const tabs = [
+    "Professional Dressing and Attire",
+    "Communication Skills",
+    "Key Performance Indicators",
+    "Selling Skills",
+    "Relation Building",
+    "Education",
+    "AI",
+  ];
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -13,6 +30,7 @@ export default function ContactSection() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (
     e:
@@ -26,7 +44,7 @@ export default function ContactSection() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Basic validation
     if (
@@ -35,28 +53,23 @@ export default function ContactSection() {
       !formData.url ||
       !formData.category
     ) {
-      toast.error(
-        "Please fill in all required fields 📍 (Title, Description, URL, and Category)"
-      );
+      setError("Please fill in all required fields");
       return;
     }
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const res = await api.post("/v1/media/upload-video", formData);
+      if (res.status === 200) setIsSubmitted(true);
+      else setError("Upload failed 📍");
+    } catch (error) {
+      console.log(error);
+      setError("Upload failed 📍");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({
-        title: "",
-        description: "",
-        url: "",
-        category: "",
-      });
-
-      // Reset success message after 3 seconds
-      setTimeout(() => setIsSubmitted(false), 3000);
-    }, 1000);
+      setError(null);
+    }
   };
 
   return (
@@ -82,6 +95,15 @@ export default function ContactSection() {
                   <span className="text-emerald-700 font-medium">
                     Video uploaded successfully!
                   </span>
+                </div>
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <XCircle className="w-5 h-5 text-red-600" />
+                  <span className="text-red-700 font-medium">{error}</span>
                 </div>
               </div>
             )}
@@ -148,7 +170,24 @@ export default function ContactSection() {
                 >
                   Video Category *
                 </label>
-                <input
+                <Select
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, category: value })
+                  }
+                >
+                  <SelectTrigger className="w-full border border-gray-300 px-4 py-6 rounded-lg transition-all duration-200">
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {tabs.map((tab, index) => (
+                      <SelectItem key={index} value={tab}>
+                        {tab}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                {/* <input
                   type="text"
                   id="category"
                   name="category"
@@ -156,7 +195,7 @@ export default function ContactSection() {
                   onChange={handleInputChange}
                   className="w-full px-4 outline-emerald-500 py-3 border border-gray-300 rounded-lg  focus:border-transparent transition-all duration-200"
                   placeholder="Enter video category"
-                />
+                /> */}
               </div>
 
               <button
