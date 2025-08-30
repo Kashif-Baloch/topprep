@@ -14,22 +14,6 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const ip = getClientIp(req.headers);
-    const rl = rateLimit(`login:${ip}`, 5, 10 * 60 * 1000);
-    if (!rl.ok) {
-      return NextResponse.json(
-        { error: "Too many attempts. Try again later." },
-        {
-          status: 429,
-          headers: {
-            "Retry-After": Math.ceil(
-              (rl.resetAt - Date.now()) / 1000
-            ).toString(),
-          },
-        }
-      );
-    }
-
     const body = await req.json();
     const { title, description, url, category, id } = body;
 

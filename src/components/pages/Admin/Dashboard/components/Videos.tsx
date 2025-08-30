@@ -4,6 +4,14 @@ import api from "@/config/axios";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import UpdateModal from "./UpdateModal";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 export interface Video {
   id: string;
@@ -57,62 +65,64 @@ const Videos = () => {
     fetchVideos();
   }, [tab, page, limit]);
 
-  const handleDelete = async (id: string) => {
-    try {
-      setLoading({ delete: true });
-      setError({ delete: null });
-      const res = await api.delete(`/v1/media/delete-video?id=${id}`);
-      if (res.status === 200) {
-        const newVideos = videos.filter((video) => video.id !== id);
-        setVideos(newVideos);
-      }
-    } catch (error) {
-      console.error(error);
-      setError({ delete: "Failed to delete video" });
-    } finally {
-      setLoading({ delete: false });
-    }
-  };
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  const filteredVideos = videos.filter((video) =>
+    video.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const sortedVideos = [...filteredVideos].sort((a, b) => {
+    const cmp = a.title.localeCompare(b.title);
+    return sortOrder === "asc" ? cmp : -cmp;
+  });
 
   return (
     <section className="container mx-auto px-4 py-16">
-      {openUpdateModal && (
-        <UpdateModal
-          fetchVideos={fetchVideos}
-          video={updateVideo}
-          setOpen={setOpenUpdateModal}
+      {/* Filters: Search (wide) -> Tabs -> Sort */}
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-3 pb-2 mb-8">
+        {/* Search Bar */}
+        <Input
+          type="text"
+          placeholder="Search by name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="flex-1 min-w-[260px] border border-gray-300 rounded"
         />
-      )}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-          Exclusive Video Content
-        </h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Access in-depth, expert-curated videos that cover all aspects of sales
-          mastery by experienced managers of corporates.
-        </p>
-      </div>
 
-      {/* Tabs Navigation - Similar to the screenshot */}
-      <div className="flex overflow-x-auto pb-2 mb-8 hide-scrollbar">
-        <div className="flex space-x-2 justify-center mx-auto">
-          {tabs.map((tab, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setActiveTab(index);
-                setTab(tab);
-              }}
-              className={`px-4 py-2 text-[12px] font-medium rounded-full whitespace-nowrap transition-colors ${
-                activeTab === index
-                  ? "bg-emerald-500 text-white"
-                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+        {/* Filter by Tabs */}
+        <Select
+          value={tab}
+          onValueChange={(value) => {
+            setTab(value);
+            setActiveTab(tabs.indexOf(value));
+            setPage(1);
+          }}
+        >
+          <SelectTrigger className="w-[220px]">
+            <SelectValue placeholder="Filter by category" />
+          </SelectTrigger>
+          <SelectContent>
+            {tabs.map((tab) => (
+              <SelectItem key={tab} value={tab}>
+                {tab}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* Sort Asc/Desc */}
+        <Select
+          value={sortOrder}
+          onValueChange={(v) => setSortOrder(v as "asc" | "desc")}
+        >
+          <SelectTrigger className="w-[160px]">
+            <SelectValue placeholder="Sort" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="asc">Ascending (A → Z)</SelectItem>
+            <SelectItem value="desc">Descending (Z → A)</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Video Content Area */}
@@ -126,10 +136,10 @@ const Videos = () => {
           <div className="flex items-center justify-center h-[50vh]">
             <p className="text-red-600 text-2xl font-bold">{error.fetch}</p>
           </div>
-        ) : videos.length > 0 ? (
+        ) : sortedVideos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Placeholder for videos - replace with actual content */}
-            {videos.map((video) => (
+            {sortedVideos.map((video) => (
               <div key={video.id} className="bg-white p-4 rounded-lg shadow-sm">
                 <div className="aspect-w-16 aspect-h-9  rounded mb-3"></div>
                 <div className="flex items-center justify-between">
