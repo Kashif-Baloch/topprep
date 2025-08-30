@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
       {/* Header Section */}
-      <header className="container mx-auto px-4 py-8 mt-20">
+      <header className="container mx-auto px-4 py-8 mt-20 pt-20">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="flex-1 text-center lg:text-left">
             {/* Headlines */}

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
@@ -50,15 +51,23 @@ const Navbar = () => {
               >
                 About Us
               </Link>
+              <Link
+                className="hover:text-primary text-black transition-all"
+                href="/contact"
+              >
+                Contact Us
+              </Link>
             </ul>
           </nav>
-          <Link
+        </div>
+
+        <div className="hidden items-center lg:flex">
+          <Button
             className="bg-emerald-500 hover:bg-emerald-600 uppercase ml-4 text-white hidden lg:block px-8 py-[10px] rounded-lg shadow-lg hover:shadow-xl transition-all
           duration-300"
-            href="/contact"
           >
-            Contact Us
-          </Link>
+            Book Now
+          </Button>
         </div>
       </div>
 

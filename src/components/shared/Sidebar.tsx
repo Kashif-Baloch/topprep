@@ -1,5 +1,12 @@
 "use client";
-import { LogOut, LayoutDashboard, MenuIcon, X, Plus } from "lucide-react";
+import {
+  LogOut,
+  LayoutDashboard,
+  MenuIcon,
+  X,
+  Plus,
+  Video,
+} from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -28,6 +35,7 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
       items: [
         { title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
         { title: "Add Video", href: "/admin/add-video", icon: Plus },
+        { title: "Videos", href: "/admin/videos", icon: Video },
       ],
     },
   ];
@@ -117,7 +125,7 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* main content */}
-      <div className="ml-[240px]">{children}</div>
+      <div className="lg:ml-[240px]">{children}</div>
     </>
   );
 };
