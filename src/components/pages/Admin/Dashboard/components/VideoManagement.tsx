@@ -111,7 +111,7 @@ const Videos = () => {
           placeholder="Search by name"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 min-w-[260px] border border-gray-300 rounded"
+          className="flex-1 min-w-[260px] border border-gray-200  !h-11 rounded-xl "
         />
 
         {/* Filter by Tabs */}
@@ -123,7 +123,7 @@ const Videos = () => {
             setPage(1);
           }}
         >
-          <SelectTrigger className="w-[220px]">
+          <SelectTrigger className="w-[220px] !h-11 rounded-xl ">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
           <SelectContent>
@@ -140,7 +140,7 @@ const Videos = () => {
           value={sortOrder}
           onValueChange={(v) => setSortOrder(v as "asc" | "desc")}
         >
-          <SelectTrigger className="w-[160px]">
+          <SelectTrigger className="w-[160px] !h-11 rounded-xl ">
             <SelectValue placeholder="Sort" />
           </SelectTrigger>
           <SelectContent>
@@ -176,7 +176,7 @@ const Videos = () => {
                       }`}
                       onClick={() => handleDelete(video.id)}
                     >
-                      {loading?.delete ? "Deleting..." : "Delete"}{" "}
+                      {loading?.[video.id] ? "Deleting..." : "Delete"}{" "}
                       <Trash2 size={18} />
                     </span>
 

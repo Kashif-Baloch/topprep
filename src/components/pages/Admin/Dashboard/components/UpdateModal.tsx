@@ -91,17 +91,17 @@ const UpdateModal = ({
   };
 
   return (
-    <div className="fixed bg-[#0000006e] scroll-hide inset-0 z-[1000] overflow-y-auto">
-      <X
-        size={40}
-        className="absolute top-4 right-4 cursor-pointer text-white"
-        onClick={() => setOpen(false)}
-      />
-      <div className="container mx-auto py-20">
+    <div className="fixed bg-[#0000006e] scroll-hide inset-0 z-[1000] overflow-y-auto grid place-items-center">
+      <div className="container relative mx-auto py-20">
         <div>
           {/* Contact Form */}
           <div className="relative">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 lg:max-w-lg w-full mx-auto">
+            <div className="bg-white relative rounded-2xl shadow-2xl p-8 lg:max-w-lg w-full mx-auto">
+              <X
+                size={20}
+                className="absolute top-4 right-4 cursor-pointer text-black"
+                onClick={() => setOpen(false)}
+              />
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
                   <Send className="w-6 h-6 text-emerald-600" />

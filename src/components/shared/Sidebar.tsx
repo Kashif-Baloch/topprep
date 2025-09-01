@@ -57,7 +57,7 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
         <MenuIcon className="size-7" />
       </div>
       <div
-        className={`fixed left-0 top-0 flex h-full w-full max-w-[240px] z-[500] flex-col items-center bg-white transition-all duration-500 justify-start ${
+        className={`fixed left-0 top-0 flex h-full w-full max-w-[240px] z-[500] flex-col items-center bg-white transition-all duration-500 justify-start border-r ${
           sidebarOpen ? "" : "translate-x-[-500px] lg:translate-x-[0px]"
         }`}
       >

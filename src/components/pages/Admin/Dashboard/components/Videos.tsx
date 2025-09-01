@@ -31,6 +31,7 @@ const Videos = () => {
   const [page, setPage] = useState(1);
   const limit = Number(process.env.NEXT_PUBLIC_SECURE_LIMIT!) || 10;
   const tabs = [
+    "All",
     "Professional Dressing and Attire",
     "Communication Skills",
     "Key Performance Indicators",
@@ -40,7 +41,7 @@ const Videos = () => {
     "AI",
   ];
 
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(1);
   const [tab, setTab] = useState(tabs[activeTab]);
 
   const fetchVideos = async () => {
@@ -86,19 +87,20 @@ const Videos = () => {
           placeholder="Search by name"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 min-w-[260px] border border-gray-300 rounded"
+          className="flex-1 !h-12 rounded-xl min-w-[260px] border border-gray-200 "
         />
 
         {/* Filter by Tabs */}
         <Select
           value={tab}
           onValueChange={(value) => {
+            if (value === "All") value = "";
             setTab(value);
             setActiveTab(tabs.indexOf(value));
             setPage(1);
           }}
         >
-          <SelectTrigger className="w-[220px]">
+          <SelectTrigger className="w-[220px] !h-12 rounded-xl">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
           <SelectContent>
@@ -115,7 +117,7 @@ const Videos = () => {
           value={sortOrder}
           onValueChange={(v) => setSortOrder(v as "asc" | "desc")}
         >
-          <SelectTrigger className="w-[160px]">
+          <SelectTrigger className="w-[160px] !h-12 rounded-xl">
             <SelectValue placeholder="Sort" />
           </SelectTrigger>
           <SelectContent>

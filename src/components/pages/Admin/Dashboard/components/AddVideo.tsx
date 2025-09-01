@@ -69,12 +69,18 @@ export default function AddVideo() {
     } finally {
       setIsSubmitting(false);
       setError(null);
+      setFormData({
+        title: "",
+        description: "",
+        url: "",
+        category: "",
+      });
     }
   };
 
   return (
-    <div className="container bg-gray-100 mx-auto py-20">
-      <div>
+    <div className="container min-h-dvh  grid place-items-center mx-auto py-20">
+      <div className="max-w-2xl w-full">
         {/* Contact Form */}
         <div className="relative">
           <div className="bg-white rounded-2xl shadow-2xl p-8 lg:max-w-lg w-full mx-auto">
