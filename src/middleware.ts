@@ -1,7 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { COOKIE_NAME } from "@/lib/auth";
+import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import type { NextRequest } from "next/server";
+import { COOKIE_NAME } from "./lib/auth";
 
-const PROTECTED_PATHS = ["/admin/dashboard", "/api"];
+const PROTECTED_PATHS = ["/dashboard", "/api/checkout"];
+const PUBLIC_FILE = /\.(.*)$/;
 
 function withSecurityHeaders(res: NextResponse) {
   const isProd = process.env.NODE_ENV === "production";
@@ -41,13 +44,29 @@ function withSecurityHeaders(res: NextResponse) {
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  console.log("📍 Route : ", pathname);
-
-  if (pathname === "/api/v1/auth/admin/login") {
+  // Skip public files and Next.js internals
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api/auth") ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/favicon.ico") ||
+    PUBLIC_FILE.test(pathname)
+  ) {
     return NextResponse.next();
   }
 
   const isProtected = PROTECTED_PATHS.some((path) => pathname.startsWith(path));
+
+  if (isProtected) {
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+    // Redirect to login if not authenticated
+    if (!token) {
+      const url = new URL("/auth/signin", req.url);
+      url.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(url);
+    }
+  }
 
   if (!isProtected) {
     return withSecurityHeaders(NextResponse.next());

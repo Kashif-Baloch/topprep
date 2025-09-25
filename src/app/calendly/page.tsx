@@ -1,8 +1,32 @@
+"use client";
 import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/Navbar";
-import React from "react";
+import { getPlan } from "@/lib/subscription";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
 
 const CalendlyPage = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const checkPlan = async () => {
+    if (!session?.user?.email) return;
+
+    try {
+      const userPlan = await getPlan(session.user.email);
+      if (userPlan?.plan !== "pro") {
+        router.push("/");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    checkPlan();
+  }, [session]);
+
   return (
     <>
       <Navbar />

@@ -14,9 +14,14 @@ interface Video {
   category: string;
 }
 
-const SubPage = ({ sub_pages }: { sub_pages: string }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [unlocked, setUnlocked] = useState(false); // track if user has subscribed
+interface SubPageProps {
+  sub_pages: string;
+  hasValidPlan: boolean | null;
+  onUpgradeClick: () => void;
+}
+
+const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
+  const [displayedVideos, setDisplayedVideos] = useState<Video[]>([]);
 
   const [videos, setVideos] = useState<Video[]>([]);
   const [totalVideos, setTotalVideos] = useState(0);
@@ -34,8 +39,17 @@ const SubPage = ({ sub_pages }: { sub_pages: string }) => {
         const res = await api.get(
           `/v1/media/get-videos?category=${tab}&page=${page}&limit=${limit}`
         );
-        setVideos(res.data.videos);
+        const fetchedVideos = res.data.videos;
+        setVideos(fetchedVideos);
         setTotalVideos(res.data.totalVideos);
+        
+        // Update displayed videos based on subscription status
+        if (hasValidPlan) {
+          setDisplayedVideos(fetchedVideos);
+        } else {
+          // Only show first 2 videos for non-subscribers
+          setDisplayedVideos(fetchedVideos.slice(0, 2));
+        }
       } catch (error) {
         console.error(error);
         setError("Failed to fetch videos");
@@ -44,40 +58,7 @@ const SubPage = ({ sub_pages }: { sub_pages: string }) => {
       }
     };
     fetchVideos();
-  }, [tab, page, limit]);
-
-  // const videos = [
-  //   {
-  //     id: 1,
-  //     title: "Video Title 1",
-  //     url: "https://www.youtube.com/embed/vljPVueLV9Y?si=Vty9MCLkwa_WpLmn",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Video Title 2",
-  //     url: "https://www.youtube.com/embed/vljPVueLV9Y?si=Vty9MCLkwa_WpLmn",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Video Title 3",
-  //     url: "https://www.youtube.com/embed/vljPVueLV9Y?si=Vty9MCLkwa_WpLmn",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Video Title 4",
-  //     url: "https://www.youtube.com/embed/vljPVueLV9Y?si=Vty9MCLkwa_WpLmn",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Video Title 5",
-  //     url: "https://www.youtube.com/embed/vljPVueLV9Y?si=Vty9MCLkwa_WpLmn",
-  //   },
-  // ];
-
-  const handleSubscribe = () => {
-    setUnlocked(true);
-    setModalOpen(false);
-  };
+  }, [tab, page, limit, hasValidPlan]);
 
   return (
     <section className="container mx-auto px-4 py-16 mt-20">
@@ -98,13 +79,13 @@ const SubPage = ({ sub_pages }: { sub_pages: string }) => {
           {videos.map((video, index) => (
             <div
               key={video.id}
-              className="relative bg-white p-4 rounded-lg shadow-sm"
+              className="relative bg-white p-4 rounded-lg shadow-sm group"
             >
               <h4 className="font-medium text-2xl my-6">{video.title}</h4>
 
               <div className="relative aspect-video rounded-md mb-3 overflow-hidden">
-                {/* Free videos */}
-                {index < 2 || unlocked ? (
+                {hasValidPlan || index < 2 ? (
+                  // Show full video for subscribers or first 2 videos for non-subscribers
                   <iframe
                     className="w-full h-full rounded-md"
                     src={video.videoLink}
@@ -115,21 +96,24 @@ const SubPage = ({ sub_pages }: { sub_pages: string }) => {
                     allowFullScreen
                   ></iframe>
                 ) : (
-                  /* Locked preview - thumbnail only */
+                  // Locked preview for non-subscribers
                   <div
-                    onClick={() => setModalOpen(true)}
-                    className="relative w-full h-full bg-black/10 backdrop-blur-3xl  rounded-md cursor-pointer flex items-center justify-center group"
+                    onClick={onUpgradeClick}
+                    className="relative w-full h-full bg-black/10 rounded-md cursor-pointer flex items-center justify-center group"
                   >
-                    <div className="absolute inset-0 size-full bg-black/30 backdrop-blur-lg z-20"></div>
+                    <div className="absolute inset-0 w-full h-full bg-black/30 backdrop-blur-sm group-hover:backdrop-blur-0 transition-all duration-300 z-10"></div>
                     <img
-                      src={`https://img.youtube.com/vi/vljPVueLV9Y/hqdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${getYoutubeVideoId(video.videoLink)}/hqdefault.jpg`}
                       alt={video.title}
-                      className="w-full h-full absolute top-0 left-0 object-cover "
+                      className="w-full h-full absolute top-0 left-0 object-cover"
                     />
-                    <div className="relative w-44 h-44 z-30 flex flex-col items-center justify-center text-white text-center">
-                      <Lock className="w-12 h-12 mb-2" />
-                      <p className="text-lg font-semibold">
-                        Subscribe to Unlock
+                    <div className="relative z-20 flex flex-col items-center justify-center text-white text-center p-4">
+                      <Lock className="w-12 h-12 mb-2 group-hover:scale-110 transition-transform duration-300" />
+                      <p className="text-lg font-semibold group-hover:text-emerald-400 transition-colors duration-300">
+                        Subscribe to Unlock All Videos
+                      </p>
+                      <p className="text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        Get access to all videos with a Pro subscription
                       </p>
                     </div>
                   </div>
@@ -143,21 +127,28 @@ const SubPage = ({ sub_pages }: { sub_pages: string }) => {
       <div className="flex items-center justify-center ">
         <Button
           disabled={page >= Math.ceil(totalVideos / limit)}
-          onClick={() => setPage(page + 1)}
+          onClick={() => {
+            if (!hasValidPlan) {
+              onUpgradeClick();
+            } else {
+              setPage(page + 1);
+            }
+          }}
           className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          View More
+          {hasValidPlan ? 'View More' : 'Upgrade to View More'}
         </Button>
       </div>
 
-      {/* Modal */}
-      <SubscribeModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        // onSubscribe={handleSubscribe}
-      />
     </section>
   );
 };
+
+// Helper function to extract YouTube video ID from URL
+function getYoutubeVideoId(url: string): string {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : '';
+}
 
 export default SubPage;

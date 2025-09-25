@@ -98,7 +98,7 @@ const Videos = () => {
         ) : videos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Placeholder for videos - replace with actual content */}
-            {videos.map((video) => (
+            {videos.slice(0, 2).map((video) => (
               <div key={video.id} className="bg-white p-4 rounded-lg shadow-sm">
                 <div className="aspect-w-16 aspect-h-9  rounded mb-3"></div>
                 <h4 className="font-medium my-3">{video.title}</h4>

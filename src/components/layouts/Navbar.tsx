@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   DropdownMenu,
@@ -10,9 +10,81 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { ChevronDown, Menu, X } from "lucide-react";
+import { Button } from "../ui/button";
+import { getPlan, SubscriptionPlan } from "@/lib/subscription";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
+
+  const { data: session } = useSession();
+  const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async (plan: "basic" | "pro", amount: number) => {
+    if (!session?.user?.email) {
+      router.push("/auth/signin");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session?.user?.email,
+          plan,
+          amount,
+        }),
+      });
+
+      const { sessionId } = await response.json();
+
+      if (sessionId) {
+        const stripe = await import("@stripe/stripe-js").then((mod) =>
+          mod.loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+        );
+        if (!stripe) {
+          throw new Error("Stripe failed to initialize");
+        }
+
+        const { error } = await stripe.redirectToCheckout({
+          sessionId,
+        });
+
+        if (error) {
+          console.error("Stripe error:", error);
+          toast.error("Failed to redirect to payment");
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getPlanStatus = async () => {
+    const email = session?.user?.email;
+    if (!email) {
+      return;
+    }
+    const plan = await getPlan(email);
+    setPlan(plan);
+  };
+
+  useEffect(() => {
+    getPlanStatus();
+  }, [session]);
 
   const links = [
     "Professional Dressing and Attire",
@@ -90,13 +162,17 @@ const Navbar = () => {
           <Menu />
         </button>
         <div className=" items-center lg:gap-3 lg:flex hidden">
-          <Link
+          <Button
             className="bg-emerald-500 hover:bg-emerald-600 capitalize ml-4 text-white hidden lg:block px-8 py-[10px] rounded-lg shadow-lg hover:shadow-xl transition-all
           duration-300"
-            href="/calendly"
+            onClick={() => {
+              plan?.plan === "pro" && plan?.status === "active"
+                ? router.push("/calendly")
+                : handleClick("pro", 9900);
+            }}
           >
             Book a Consultant
-          </Link>
+          </Button>
         </div>
       </div>
 
@@ -157,12 +233,16 @@ const Navbar = () => {
             >
               Contact Us
             </Link>
-            <Link
-              className="bg-emerald-500 hover:bg-emerald-600 border border-white uppercase text-white px-8 py-[10px] rounded-md"
-              href="/calendly"
+            <Button
+              className="bg-emerald-500 !my-4 hover:bg-emerald-600 border border-white uppercase text-white px-8 py-[10px] rounded-md"
+              onClick={() => {
+                plan?.plan === "pro" && plan?.status === "active"
+                  ? router.push("/calendly")
+                  : handleClick("pro", 9900);
+              }}
             >
               Book a Consultant
-            </Link>
+            </Button>
 
             <span
               onClick={() => {

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,9 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import {
   CheckCircle,
   Play,
@@ -21,8 +20,79 @@ import {
 } from "lucide-react";
 import VideosSection from "./components/VideosSection";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { getPlan, SubscriptionPlan } from "@/lib/subscription";
 
 export default function Home() {
+  const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
+
+  const getPlanStatus = async () => {
+    const email = session?.user?.email;
+    if (!email) {
+      return;
+    }
+    const plan = await getPlan(email);
+    setPlan(plan);
+  };
+
+  const handleClick = async (plan: "basic" | "pro", amount: number) => {
+    if (!session?.user?.email) {
+      router.push("/auth/signin");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session?.user?.email,
+          plan,
+          amount,
+        }),
+      });
+
+      const { sessionId } = await response.json();
+
+      if (sessionId) {
+        const stripe = await import("@stripe/stripe-js").then((mod) =>
+          mod.loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+        );
+        if (!stripe) {
+          throw new Error("Stripe failed to initialize");
+        }
+
+        const { error } = await stripe.redirectToCheckout({
+          sessionId,
+        });
+
+        if (error) {
+          console.error("Stripe error:", error);
+          toast.error("Failed to redirect to payment");
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getPlanStatus();
+  }, [session]);
+
   return (
     <div className="pt-20 bg-gradient-to-br from-blue-50 to-green-50">
       {/* Header Section */}
@@ -234,23 +304,27 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href={"/#"}>
-              <Button
-                size="lg"
-                className="bg-emerald-500 cursor-pointer hover:bg-emerald-400 text-white px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                Subscribe Now for $49/Month
-              </Button>
-            </Link>
-            <Link href={"/calendly"}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-blue-500 border-0 cursor-pointer hover:bg-blue-400 text-white  px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
-              >
-                Book 1-on-1 Consultation - $99/Hour
-              </Button>
-            </Link>
+            <Button
+              onClick={() => handleClick("basic", 4900)}
+              size="lg"
+              className="bg-emerald-500 cursor-pointer hover:bg-emerald-400 text-white px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              {isLoading ? "Loading..." : "Subscribe Now for $49/Month"}
+            </Button>
+            {/* <Link href={"/calendly"}> */}
+            <Button
+              onClick={() => {
+                plan?.plan === "pro" && plan?.status === "active"
+                  ? router.push("/calendly")
+                  : handleClick("pro", 9900);
+              }}
+              size="lg"
+              variant="outline"
+              className="bg-blue-500 border-0 cursor-pointer hover:bg-blue-400 text-white  px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
+            >
+              {isLoading ? "Loading..." : "Subscribe Now for $99/Month"}
+            </Button>
+            {/* </Link> */}
           </div>
         </div>
       </section>
@@ -302,73 +376,15 @@ export default function Home() {
                       <span>Monthly progress tracking reports</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12  font-semibold">
+                  <Button
+                    onClick={() => handleClick("basic", 4900)}
+                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12  font-semibold"
+                  >
                     Subscribe Now
                   </Button>
                 </CardContent>
               </Card>
-              {/* <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-center text-blue-800">
-                    Monthly Subscription - $49
-                  </CardTitle>
-                  <CardDescription className="text-center">
-                    Full access to all video content and resources
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input
-                        className="my-2"
-                        id="firstName"
-                        placeholder="John"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input className="my-2" id="lastName" placeholder="Doe" />
-                    </div>
-                  </div>
 
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      className="my-2"
-                      id="email"
-                      type="email"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="card">Card Number</Label>
-                    <Input
-                      className="my-2"
-                      id="card"
-                      placeholder="1234 5678 9012 3456"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="expiry">Expiry</Label>
-                      <Input className="my-2" id="expiry" placeholder="MM/YY" />
-                    </div>
-                    <div>
-                      <Label htmlFor="cvc">CVC</Label>
-                      <Input className="my-2" id="cvc" placeholder="123" />
-                    </div>
-                  </div>
-
-                  <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12  font-semibold">
-                    Start Subscription - $49/Month
-                  </Button>
-                </CardContent>
-              </Card> */}
-
-              {/* Consultation Booking */}
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-center text-blue-800">
@@ -410,11 +426,18 @@ export default function Home() {
                       <span>Actionable feedback on live sales calls</span>
                     </div>
                   </div>
-                  <Link href={"/calendly"}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-800 text-white h-12 font-semibold mt-8">
-                      Book a Consultant
-                    </Button>
-                  </Link>
+                  {/* <Link href={"/calendly"}> */}
+                  <Button
+                    onClick={() => {
+                      plan?.plan === "pro" && plan?.status === "active"
+                        ? router.push("/calendly")
+                        : handleClick("pro", 9900);
+                    }}
+                    className="w-full bg-blue-600 hover:bg-blue-800 text-white h-12 font-semibold mt-8"
+                  >
+                    Book a Consultant
+                  </Button>
+                  {/* </Link> */}
                 </CardContent>
               </Card>
             </div>
