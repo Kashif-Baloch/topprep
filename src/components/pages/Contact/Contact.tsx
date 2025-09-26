@@ -8,7 +8,6 @@ export default function ContactSection() {
     name: "",
     email: "",
     phone: "",
-    company: "",
     message: "",
   });
 
@@ -47,7 +46,6 @@ export default function ContactSection() {
         name: "",
         email: "",
         phone: "",
-        company: "",
         message: "",
       });
 
@@ -187,24 +185,6 @@ export default function ContactSection() {
                   onChange={handleInputChange}
                   className="w-full px-4 outline-emerald-500 py-3 border border-gray-300 rounded-lg  focus:border-transparent transition-all duration-200"
                   placeholder="Enter your phone number"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="company"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleInputChange}
-                  className="w-full px-4 outline-emerald-500 py-3 border border-gray-300 rounded-lg  focus:border-transparent transition-all duration-200"
-                  placeholder="Enter your company name"
                 />
               </div>
 
