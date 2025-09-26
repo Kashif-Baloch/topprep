@@ -46,6 +46,8 @@ export default function ClientWrapper({ sub_pages }: { sub_pages: string }) {
   // Check if user has a valid plan
   const hasValidPlan = plan && (plan.plan === "pro" || plan.plan === "basic");
 
+  console.log(sub_pages);
+
   return (
     <>
       <SubPage

@@ -42,7 +42,7 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
         const fetchedVideos = res.data.videos;
         setVideos(fetchedVideos);
         setTotalVideos(res.data.totalVideos);
-        
+
         // Update displayed videos based on subscription status
         if (hasValidPlan) {
           setDisplayedVideos(fetchedVideos);
@@ -103,7 +103,9 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
                   >
                     <div className="absolute inset-0 w-full h-full bg-black/30 backdrop-blur-sm group-hover:backdrop-blur-0 transition-all duration-300 z-10"></div>
                     <img
-                      src={`https://img.youtube.com/vi/${getYoutubeVideoId(video.videoLink)}/hqdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${getYoutubeVideoId(
+                        video.videoLink
+                      )}/hqdefault.jpg`}
                       alt={video.title}
                       className="w-full h-full absolute top-0 left-0 object-cover"
                     />
@@ -136,10 +138,9 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
           }}
           className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          {hasValidPlan ? 'View More' : 'Upgrade to View More'}
+          {hasValidPlan ? "View More" : "Upgrade to View More"}
         </Button>
       </div>
-
     </section>
   );
 };
@@ -148,7 +149,7 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
 function getYoutubeVideoId(url: string): string {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : '';
+  return match && match[2].length === 11 ? match[2] : "";
 }
 
 export default SubPage;
