@@ -14,39 +14,42 @@ export default function ClientWrapper({ sub_pages }: { sub_pages: string }) {
   useEffect(() => {
     const checkPlan = async () => {
       if (!session?.user?.email) return;
-      
+
       try {
         const userPlan = await getPlan(session.user.email);
         setPlan(userPlan);
-        
+
         // Check if user has a valid plan
-        if (userPlan && (userPlan.plan === 'pro' || userPlan.plan === 'basic')) {
-          console.log('User has a valid plan:', userPlan.plan);
+        if (
+          userPlan &&
+          (userPlan.plan === "pro" || userPlan.plan === "basic")
+        ) {
+          console.log("User has a valid plan:", userPlan.plan);
           setIsOpen(false);
         } else {
-          console.log('User does not have a valid plan');
+          console.log("User does not have a valid plan");
           // Only show the modal if user doesn't have a valid plan
           setTimeout(() => {
             setIsOpen(true);
           }, 1000);
         }
       } catch (error) {
-        console.error('Error checking plan status:', error);
+        console.error("Error checking plan status:", error);
         // In case of error, we'll keep the modal closed by default
         setIsOpen(false);
       }
     };
-    
+
     checkPlan();
   }, [session?.user?.email]);
 
   // Check if user has a valid plan
-  const hasValidPlan = plan && (plan.plan === 'pro' || plan.plan === 'basic');
+  const hasValidPlan = plan && (plan.plan === "pro" || plan.plan === "basic");
 
   return (
     <>
-      <SubPage 
-        sub_pages={sub_pages} 
+      <SubPage
+        sub_pages={sub_pages}
         hasValidPlan={hasValidPlan}
         onUpgradeClick={() => setIsOpen(true)}
       />
