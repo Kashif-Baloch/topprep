@@ -20,6 +20,7 @@ const Videos = () => {
   const [page, setPage] = useState(1);
   const limit = Number(process.env.NEXT_PUBLIC_USER_LIMIT!) || 2;
   const tabs = [
+    "Health and Fitness",
     "Professional Dressing and Attire",
     "Communication Skills",
     "Key Performance Indicators",
@@ -73,7 +74,7 @@ const Videos = () => {
                 setActiveTab(index);
                 setTab(tab);
               }}
-              className={`px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 text-[12px] font-medium rounded-full whitespace-nowrap transition-colors ${
                 activeTab === index
                   ? "bg-emerald-500 text-white"
                   : "bg-gray-100 text-gray-800 hover:bg-gray-200"

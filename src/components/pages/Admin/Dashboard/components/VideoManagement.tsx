@@ -31,6 +31,8 @@ const Videos = () => {
   const [page, setPage] = useState(1);
   const limit = Number(process.env.NEXT_PUBLIC_SECURE_LIMIT!) || 10;
   const tabs = [
+    "All",
+    "Health and Fitness",
     "Professional Dressing and Attire",
     "Communication Skills",
     "Key Performance Indicators",
