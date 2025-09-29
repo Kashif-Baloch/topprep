@@ -9,7 +9,6 @@ const Page = async ({ params }: { params: Promise<{ sub_pages: string }> }) => {
     <>
       <Navbar />
       <ClientWrapper sub_pages={sub_pages} />
-
       <Footer />
     </>
   );
