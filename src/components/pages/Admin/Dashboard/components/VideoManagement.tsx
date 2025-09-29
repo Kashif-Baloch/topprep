@@ -47,12 +47,13 @@ const Videos = () => {
 
   const fetchVideos = async () => {
     try {
-      // making the state object for differ loading and error by adding auto genrate keys name
       setLoading({ fetch: true });
       setError({ fetch: null });
-      const res = await api.get(
-        `/v1/media/get-videos?category=${tab}&page=${page}&limit=${limit}`
-      );
+      const url = tab === "All" 
+        ? `/v1/media/get-videos?page=${page}&limit=${limit}`
+        : `/v1/media/get-videos?category=${tab}&page=${page}&limit=${limit}`;
+      
+      const res = await api.get(url);
       setVideos(res.data.videos);
       setTotalVideos(res.data.totalVideos);
     } catch (error) {
