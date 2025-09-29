@@ -125,7 +125,7 @@ const Videos = () => {
       <div className="flex items-center justify-center ">
         <Link
           href={`/videos/${tab}`}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
           View More
         </Link>

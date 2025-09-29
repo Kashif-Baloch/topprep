@@ -9,8 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 export default function AddVideo() {
+  const router = useRouter();
   const tabs = [
     "Professional Dressing and Attire",
     "Communication Skills",
@@ -61,8 +63,10 @@ export default function AddVideo() {
 
     try {
       const res = await api.post("/v1/media/upload-video", formData);
-      if (res.status === 200) setIsSubmitted(true);
-      else setError("Upload failed 📍");
+      if (res.status === 200) {
+        setIsSubmitted(true);
+        router.push("/admin/dashboard");
+      } else setError("Upload failed 📍");
     } catch (error) {
       console.log(error);
       setError("Upload failed 📍");

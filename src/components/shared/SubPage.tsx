@@ -111,7 +111,7 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
                     />
                     <div className="relative z-20 flex flex-col items-center justify-center text-white text-center p-4">
                       <Lock className="w-12 h-12 mb-2 group-hover:scale-110 transition-transform duration-300" />
-                      <p className="text-lg font-semibold group-hover:text-emerald-400 transition-colors duration-300">
+                      <p className="text-sm font-semibold group-hover:text-emerald-400 transition-colors duration-300">
                         Subscribe to Unlock All Videos
                       </p>
                       <p className="text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -136,7 +136,7 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
               setPage(page + 1);
             }
           }}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
           {hasValidPlan ? "View More" : "Upgrade to View More"}
         </Button>

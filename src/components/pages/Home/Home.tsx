@@ -31,6 +31,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [plan, setPlan] = useState<SubscriptionPlan | null>(null);
+  const [planId, setPlanId] = useState<string | null>(null);
 
   const getPlanStatus = async () => {
     const email = session?.user?.email;
@@ -41,13 +42,17 @@ export default function Home() {
     setPlan(plan);
   };
 
-  const handleClick = async (plan: "basic" | "pro", amount: number) => {
+  const handleClick = async (
+    plan: "basic" | "pro",
+    amount: number,
+    planId: string
+  ) => {
+    setPlanId(planId);
+    setIsLoading(true);
     if (!session?.user?.email) {
       router.push("/auth/signin");
       return;
     }
-
-    setIsLoading(true);
 
     try {
       const response = await fetch("/api/create-checkout-session", {
@@ -115,7 +120,7 @@ export default function Home() {
             <Link href={"/contact"}>
               <Button
                 size="lg"
-                className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-7 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white px-12 py-7 font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 text-sm "
               >
                 Start Your Journey Today
               </Button>
@@ -305,24 +310,28 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
-              onClick={() => handleClick("basic", 4900)}
+              onClick={() => handleClick("basic", 4900, "basic_id")}
               size="lg"
-              className="bg-emerald-500 cursor-pointer hover:bg-emerald-400 text-white px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-emerald-500 cursor-pointer hover:bg-emerald-400 text-white px-12 h-14 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              {isLoading ? "Loading..." : "Subscribe Now for $49/Month"}
+              {isLoading && planId === "basic_id"
+                ? "Loading..."
+                : "Subscribe Now for $49/Month"}
             </Button>
             {/* <Link href={"/calendly"}> */}
             <Button
               onClick={() => {
                 plan?.plan === "pro" && plan?.status === "active"
                   ? router.push("/calendly")
-                  : handleClick("pro", 9900);
+                  : handleClick("pro", 9900, "pro_id");
               }}
               size="lg"
               variant="outline"
-              className="bg-blue-500 border-0 cursor-pointer hover:bg-blue-400 text-white  px-4 h-14 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
+              className="bg-blue-500 border-0 cursor-pointer hover:bg-blue-400 text-white  px-12 h-14 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:text-white"
             >
-              {isLoading ? "Loading..." : "Subscribe Now for $99/Month"}
+              {isLoading && planId === "pro_id"
+                ? "Loading..."
+                : "Subscribe Now for $99/Month"}
             </Button>
             {/* </Link> */}
           </div>
@@ -377,10 +386,12 @@ export default function Home() {
                     </div>
                   </div>
                   <Button
-                    onClick={() => handleClick("basic", 4900)}
+                    onClick={() => handleClick("basic", 4900, "basic_id_1")}
                     className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12  font-semibold"
                   >
-                    Subscribe Now
+                    {isLoading && planId === "basic_id_1"
+                      ? "Loading..."
+                      : "Subscribe Now for $49/Month"}
                   </Button>
                 </CardContent>
               </Card>
@@ -431,11 +442,13 @@ export default function Home() {
                     onClick={() => {
                       plan?.plan === "pro" && plan?.status === "active"
                         ? router.push("/calendly")
-                        : handleClick("pro", 9900);
+                        : handleClick("pro", 9900, "pro_id_1");
                     }}
                     className="w-full bg-blue-600 hover:bg-blue-800 text-white h-12 font-semibold mt-8"
                   >
-                    Book a Consultant
+                    {isLoading && planId === "pro_id_1"
+                      ? "Loading..."
+                      : "Book a Consultant"}
                   </Button>
                   {/* </Link> */}
                 </CardContent>
