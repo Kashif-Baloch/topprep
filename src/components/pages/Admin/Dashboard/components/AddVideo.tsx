@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 export default function AddVideo() {
   const router = useRouter();
   const tabs = [
+    "Health and Fitness",
     "Professional Dressing and Attire",
     "Communication Skills",
     "Key Performance Indicators",
@@ -211,7 +212,7 @@ export default function AddVideo() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white px-8 py-4 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>

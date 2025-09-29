@@ -217,7 +217,7 @@ const Videos = () => {
         <Button
           disabled={page >= Math.ceil(totalVideos / limit)}
           onClick={() => setPage(page + 1)}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white py-6 px-10 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
           View More
         </Button>

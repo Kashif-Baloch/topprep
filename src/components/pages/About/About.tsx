@@ -224,7 +224,7 @@ export default function AboutSection() {
         </p>
         <Link
           href="/contact"
-          className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center gap-2"
         >
           {/* <Star className="w-5 h-5" /> */}
           Start Your Journey Today

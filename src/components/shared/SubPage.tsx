@@ -136,7 +136,7 @@ const SubPage = ({ sub_pages, hasValidPlan, onUpgradeClick }: SubPageProps) => {
               setPage(page + 1);
             }
           }}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white p-4 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white py-5 px-10 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
         >
           {hasValidPlan ? "View More" : "Upgrade to View More"}
         </Button>

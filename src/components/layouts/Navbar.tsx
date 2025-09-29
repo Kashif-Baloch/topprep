@@ -163,8 +163,7 @@ const Navbar = () => {
         </button>
         <div className=" items-center lg:gap-3 lg:flex hidden">
           <Button
-            className="bg-emerald-500 hover:bg-emerald-600 capitalize ml-4 text-white hidden lg:block px-8 py-[10px] rounded-lg shadow-lg hover:shadow-xl transition-all
-          duration-300"
+            className="bg-emerald-500  hover:bg-emerald-600 border border-white uppercase text-white !py-5 !px-10 rounded-md text-sm"
             onClick={() => {
               plan?.plan === "pro" && plan?.status === "active"
                 ? router.push("/calendly")
@@ -234,7 +233,7 @@ const Navbar = () => {
               Contact Us
             </Link>
             <Button
-              className="bg-emerald-500 !my-4 hover:bg-emerald-600 border border-white uppercase text-white px-8 py-[10px] rounded-md"
+              className="bg-emerald-500 !my-4 hover:bg-emerald-600 border border-white uppercase text-white !py-3 !px-10 rounded-md text-sm"
               onClick={() => {
                 plan?.plan === "pro" && plan?.status === "active"
                   ? router.push("/calendly")
